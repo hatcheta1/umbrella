@@ -1,16 +1,32 @@
 require "http"
 require "json"
 
-gmaps_api_key = ENV[GMAPS_KEY]
-pirate_weather_api_key = ENV[PIRATE_WEATHER_KEY]
+gmaps_api_key = ENV.fetch("GMAPS_KEY")
+pirate_weather_api_key = ENV.fetch("PIRATE_WEATHER_KEY")
 
 # Ask the user for their location (use `gets`)
-puts "Where are you?"
-location = gets.chomp
-
 # Get and store the user's location
+puts "Where are you located?"
+#user_location = gets.chomp.gsub(" ", "%20")
+user_location = "Okmulgee"
+
+pp user_location
 
 # Get the user's latitude and longitude from the Google Maps API
+maps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + user_location + "&key=" + gmaps_api_key
+
+resp = HTTP.get(maps_url)
+raw_response = resp.to_s
+parsed_response = JSON.parse(raw_response)
+
+results = parsed_response.fetch("results") # There are 2 keys in the Hash, results is the first
+first_result = results.at(0) # The value of results is an array with 1 element, which is a Hash
+
+geo = first_result.fetch("geometry")
+location = geo.fetch("location")
+
+latitude = location.fetch("lat")
+longitude = location.fetch("lng")
 
 # Get the weather at the user’s coordinates from the Pirate Weather API
 
