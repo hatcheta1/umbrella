@@ -4,6 +4,11 @@ require "json"
 gmaps_api_key = ENV.fetch("GMAPS_KEY")
 pirate_weather_api_key = ENV.fetch("PIRATE_WEATHER_KEY")
 
+puts "========================================"
+puts "Will you need an umbrella today?".center(40)
+puts "========================================"
+puts "\n"
+
 # Ask the user for their location (use `gets`)
 # Get and store the user's location
 puts "Where are you located?"
