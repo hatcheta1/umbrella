@@ -16,7 +16,7 @@ user_location = gets.chomp
 puts "Checking the weather at #{user_location}..."
 
 # Retrieve the coordinates from the Google Maps API
-gmaps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + user_location + "&key=" + gmaps_api_key
+gmaps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{user_location}&key=#{gmaps_api_key}"
 
 response = HTTP.get(gmaps_url).to_s
 parsed_response = JSON.parse(response)
@@ -31,7 +31,7 @@ longitude = location.fetch("lng")
 puts "Your coordinates are #{latitude}, #{longitude}."
 
 # Retrieve the weather data from the Pirate Weather API
-pirate_weather_url = "https://api.pirateweather.net/forecast/" + pirate_weather_api_key + "/" + latitude.to_s + ", " + longitude.to_s
+pirate_weather_url = "https://api.pirateweather.net/forecast/#{pirate_weather_api_key}/#{latitude.to_s}, #{longitude.to_s}"
 
 response = HTTP.get(pirate_weather_url).to_s
 parsed_response = JSON.parse(response)
